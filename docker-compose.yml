@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ozmap-api
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/ozmap
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: unless-stopped
+    command: npm run dev
+
+  mongodb:
+    image: mongo:8.0
+    container_name: ozmap-mongodb
+    ports:
+      - '27017:27017'
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      - MONGO_INITDB_DATABASE=ozmap
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/ozmap --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 120s
+
+volumes:
+  mongodb_data:
+    driver: local
