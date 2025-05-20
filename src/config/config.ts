@@ -15,5 +15,5 @@ export const server = {
 export const MONGODB_URI =
   process.env.MONGODB_URI || 'mongodb://localhost:27017';
 export const DB_NAME = process.env.DB_NAME || 'ozmap';
-export const GEOCODING_API_KEY = process.env.GEOCODING_API_KEY || '';
+export const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_MAPS_API_KEY || '';
 export const DEFAULT_COUNTRY_CODE = process.env.DEFAULT_COUNTRY_CODE || 'BR';
