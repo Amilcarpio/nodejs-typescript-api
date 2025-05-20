@@ -7,3 +7,6 @@ coverage
 package-lock.json
 yarn-error.log
 npm-debug.log
+.env.test
+build
+.nyc_output

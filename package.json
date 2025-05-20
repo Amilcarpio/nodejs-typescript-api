@@ -2,17 +2,15 @@
   "name": "oztest",
   "version": "0.0.1",
   "description": "DevOZ - Tech test",
-  "main": "index.js",
-  "type": "module",
+  "main": "src/server.ts",
   "scripts": {
-    "test": "mocha -r ts-node/register \"src/**/*.spec.ts\" --exit",
-    "test:ci": "nyc mocha -r ts-node/register \"src/**/*.spec.ts\"",
-    "build": "tsc --noEmit",
-    "start": "node dist/server.js",
-    "dev": "nodemon --watch src --ext ts --exec \"node --loader ts-node/esm src/server.ts\"",
-    "lint": "eslint \"src/**/*.ts\"",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "format:check": "prettier --check \"src/**/*.ts\""
+    "dev": "nodemon src/server.ts",
+    "test:coverage": "nyc --reporter=lcov --reporter=text mocha --require ts-node/register --file src/modules/region/tests/test-setup.ts \"src/**/*.spec.ts\" --exit",
+    "test": "mocha --require ts-node/register --file src/modules/region/tests/test-setup.ts \"src/**/*.spec.ts\" --exit",
+    "lint": "eslint src --ext .ts",
+    "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
+    "build": "tsc --project tsconfig.build.json",
+    "coverage": "nyc --reporter=lcov --reporter=text mocha --require ts-node/register --file src/modules/region/tests/test-setup.ts \"src/**/*.spec.ts\" --exit"
   },
   "nyc": {
     "extension": [
@@ -30,18 +28,33 @@
     "all": true
   },
   "dependencies": {
+    "@googlemaps/google-maps-services-js": "^3.4.1",
     "axios": "^1.9.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.2",
     "express": "^4.21.2",
-    "mongoose": "^7.8.7"
+    "i18n": "^0.15.1",
+    "mongoose": "^7.8.7",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
+    "tsyringe": "^4.10.0",
+    "typescript-rest": "^3.0.4"
   },
   "devDependencies": {
     "@types/chai": "^4.3.6",
+    "@types/chai-as-promised": "^8.0.2",
     "@types/express": "^4.17.22",
+    "@types/i18n": "^0.13.12",
     "@types/mocha": "^10.0.2",
     "@types/mongoose": "^5.11.97",
-    "@types/node": "^20.17.47",
+    "@types/node": "^18.11.18",
+    "@types/sinon": "^17.0.4",
+    "@types/supertest": "^6.0.3",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.8",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
+    "chai-as-promised": "^8.0.1",
     "dotenv": "^16.5.0",
     "eslint": "^8.0.0",
     "eslint-config-prettier": "^8.0.0",
@@ -49,12 +62,15 @@
     "husky": "^8.0.0",
     "lint-staged": "^13.0.0",
     "mocha": "^10.2.0",
-    "nodemon": "^3.0.1",
-    "nyc": "^15.0.0",
+    "nodemon": "^2.0.20",
+    "nyc": "^15.1.0",
     "prettier": "^3.0.0",
-    "ts-node": "^10.9.1",
+    "reflect-metadata": "^0.2.2",
+    "sinon": "^20.0.0",
+    "supertest": "^7.1.1",
+    "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
-    "typescript": "^5.8.3"
+    "typescript": "^4.9.4"
   },
   "husky": {
     "hooks": {
