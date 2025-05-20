@@ -238,6 +238,17 @@ curl -X DELETE http://localhost:3000/api/regions/<regionId>
 - `npm run coverage` — Executa testes com relatório de cobertura
 - `npm run lint` — Lint do código
 - `npm run format:check` — Verifica formatação do código
+- `npm run seed` — Popula o banco de dados com regiões de exemplo (executa o script `src/scripts/seed-regions.ts`)
+
+## 📦 Como popular o banco de dados
+
+Para inserir rapidamente regiões de exemplo no banco MongoDB, execute:
+
+```sh
+npm run seed
+```
+
+Esse comando executa o script `src/scripts/seed-regions.ts`, que insere várias regiões reais de São Paulo e outros bairros para facilitar os testes das APIs.
 
 ## 📝 Variáveis de Ambiente
 

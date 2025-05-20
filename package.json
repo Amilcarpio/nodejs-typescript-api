@@ -10,7 +10,8 @@
     "lint": "eslint src --ext .ts",
     "format:check": "prettier --check \"src/**/*.{ts,js,json}\"",
     "build": "tsc --project tsconfig.build.json",
-    "coverage": "nyc --reporter=lcov --reporter=text mocha --require ts-node/register --file src/modules/region/tests/test-setup.ts \"src/**/*.spec.ts\" --exit"
+    "coverage": "nyc --reporter=lcov --reporter=text mocha --require ts-node/register --file src/modules/region/tests/test-setup.ts \"src/**/*.spec.ts\" --exit",
+    "seed": "ts-node src/scripts/seed-regions.ts"
   },
   "nyc": {
     "extension": [
