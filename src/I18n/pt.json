@@ -1,0 +1,18 @@
+{
+  "region": {
+    "not_found": "Região não encontrada.",
+    "created": "Região criada com sucesso.",
+    "updated": "Região atualizada com sucesso.",
+    "deleted": "Região removida com sucesso.",
+    "invalid_polygon": "O polígono deve ser um loop fechado (primeiro e último pontos devem ser iguais).",
+    "too_few_coordinates": "O polígono deve ter pelo menos 4 coordenadas para formar uma forma fechada",
+    "name_required": "O nome da região é obrigatório.",
+    "name_too_short": "O nome da região deve ter pelo menos 3 caracteres.",
+    "name_too_long": "O nome da região não deve exceder 100 caracteres.",
+    "geometry_required": "A geometria da região é obrigatória."
+  },
+  "error": {
+    "internal": "Erro interno do servidor.",
+    "missing_param": "Parâmetro(s) obrigatório(s) ausente(s): %{params}"
+  }
+}

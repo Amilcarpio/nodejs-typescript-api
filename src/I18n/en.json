@@ -1,0 +1,18 @@
+{
+  "region": {
+    "not_found": "Region not found.",
+    "created": "Region created successfully.",
+    "updated": "Region updated successfully.",
+    "deleted": "Region deleted successfully.",
+    "invalid_polygon": "Polygon must be a closed loop (first and last points must be the same).",
+    "too_few_coordinates": "Polygon must have at least 4 coordinates to form a closed shape",
+    "name_required": "Region name is required.",
+    "name_too_short": "Region name must be at least 3 characters.",
+    "name_too_long": "Region name must not exceed 100 characters.",
+    "geometry_required": "Region geometry is required."
+  },
+  "error": {
+    "internal": "Internal server error.",
+    "missing_param": "Missing required parameter(s): %{params}"
+  }
+}

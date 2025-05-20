@@ -1,0 +1,28 @@
+{
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+        "source.fixAll.eslint": "explicit"
+    },
+    "[typescript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "eslint.validate": [
+        "typescript",
+        "typescriptreact"
+    ],
+    "files.exclude": {
+        "**/node_modules": true,
+        "**/dist": true,
+        "**/coverage": true
+    },
+    "terminal.integrated.profiles.linux": {
+        "bash": {
+            "path": "/bin/bash"
+        }
+    },
+    "editor.minimap.enabled": false,
+    "mochaExplorer.files.glob": "src/**/*.spec.ts"
+}
