@@ -1,4 +1,24 @@
-import { TEST } from './config.js';
+import { TEST } from './config';
+import { ApplicationError } from '../common/errors/application-error';
+
+import type i18n from 'i18n';
+if (!('i18n' in globalThis)) {
+  globalThis.i18n = {
+    configure: () => undefined,
+    init: () => undefined,
+    __: (...args: unknown[]) => (typeof args[0] === 'string' ? args[0] : ''),
+    __n: () => '',
+    __mf: () => '',
+    setLocale: () => undefined,
+    getLocale: () => 'pt',
+    getCatalog: () => ({}),
+    getLocales: () => ['pt', 'en'],
+    addLocale: () => undefined,
+    removeLocale: () => undefined,
+    getTranslations: () => ({}),
+    reloadLocales: () => undefined,
+  } as unknown as typeof i18n;
+}
 
 const colours = {
   reset: '\x1b[0m',
@@ -97,6 +117,39 @@ export function warn(message?: unknown, ...optionalParams: unknown[]) {
 }
 
 export function error(message?: unknown, ...optionalParams: unknown[]) {
+  if (
+    message instanceof Error &&
+    'translationKey' in message &&
+    typeof (globalThis.i18n as { __?: unknown })?.__ === 'function' &&
+    (message as ApplicationError).translationKey
+  ) {
+    const translationKey = (message as ApplicationError)
+      .translationKey as string;
+    const translationParams =
+      (message as ApplicationError).translationParams || {};
+    const translated = (
+      globalThis.i18n as {
+        __: (key: string, params?: Record<string, unknown>) => string;
+      }
+    ).__(translationKey, translationParams);
+    if (!TEST) {
+      console.error(
+        `[${new Date().toLocaleString()}]`,
+        colours.fg.red,
+        '[ERROR]',
+        colours.reset,
+        colours.bg.green,
+        `[${getCallingFunction(new Error())}]`,
+        colours.reset,
+        translated,
+        ...optionalParams
+      );
+      if (process.env.NODE_ENV !== 'production') {
+        console.error(message);
+      }
+    }
+    return;
+  }
   if (!TEST)
     console.error(
       `[${new Date().toLocaleString()}]`,
@@ -119,8 +172,6 @@ const logging = {
   warning: warn,
   getCallingFunction,
 };
-
-/** Create the global definition */
 declare global {
   var logging: {
     log: (message?: unknown, ...optionalParams: unknown[]) => void;
@@ -132,7 +183,6 @@ declare global {
   };
 }
 
-/** Link the local and global variable */
 globalThis.logging = logging;
 
 export default logging;
