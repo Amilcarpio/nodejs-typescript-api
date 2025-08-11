@@ -1,32 +1,34 @@
 # OZmap Geolocation API
 
-Uma API RESTful robusta e internacionalizada para gerenciamento de geolocalizações (regiões) com operações CRUD e consultas geoespaciais. Construída com Node.js, Express, TypeScript e MongoDB.
+A robust, internationalized RESTful API for managing geolocations (regions) with CRUD operations and geospatial queries. Built with **Node.js, Express, TypeScript** and **MongoDB**.
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-- **CRUD de Regiões**: Crie, leia, atualize e exclua regiões definidas como polígonos GeoJSON.
-- **Consultas Geoespaciais**:
-  - Encontrar regiões que contêm um ponto específico (longitude/latitude).
-  - Encontrar regiões dentro de uma distância de um ponto.
-  - Encontrar regiões por endereço (usando geocodificação).
-- **Internacionalização (i18n)**: Todas as mensagens de erro e logs são traduzidas (PT/EN) e respeitam o header `Accept-Language` ou o parâmetro de query `?lang`.
-- **Testes completos**: Testes unitários e de integração com Mocha/Chai. Relatório de cobertura disponível.
-- **Documentação Swagger/OpenAPI**: Documentação interativa em `/api-docs`.
-- **Dockerizado**: Desenvolvimento e testes locais facilitados com Docker Compose.
+* **Regions CRUD**: Create, read, update and delete regions defined as GeoJSON polygons.
+* **Geospatial Queries**:
 
-## 🏗️ Estrutura do Projeto
+  * Find regions that contain a specific point (longitude/latitude).
+  * Find regions within a given distance from a point.
+  * Find regions by address (using geocoding).
+* **Internationalization (i18n)**: All error messages and logs are translated (PT/EN) and respect the `Accept-Language` header or the `?lang` query parameter.
+* **Comprehensive tests**: Unit and integration tests with Mocha/Chai. Coverage report available.
+* **Swagger / OpenAPI documentation**: Interactive docs available at `/api-docs`.
+* **Dockerized**: Local development and testing made easy with Docker Compose.
 
-- `src/` — Código-fonte principal
-  - `modules/region/` — Domínio de regiões (controllers, services, models, testes)
-  - `common/` — Decorators, erros, interfaces e serviços compartilhados
-  - `middlewares/` — Middlewares do Express
-  - `config/` — Configuração da aplicação, banco, logging e Swagger
-  - `I18n/` — Arquivos de tradução
-- `test/` — (se presente) Arquivos de teste adicionais
+## 🏗️ Project Structure
 
-## ⚡ Início Rápido
+* `src/` — Main source code
 
-### 1. Clone e Instale
+  * `modules/region/` — Regions domain (controllers, services, models, tests)
+  * `common/` — Shared decorators, errors, interfaces and services
+  * `middlewares/` — Express middlewares
+  * `config/` — App, database, logging and Swagger configuration
+  * `I18n/` — Translation files
+* `test/` — (if present) Additional test files
+
+## ⚡ Quick Start
+
+### 1. Clone and install
 
 ```sh
 git clone <repo-url>
@@ -34,46 +36,46 @@ cd technical-assessment-ozmap
 npm install
 ```
 
-### 2. Variáveis de Ambiente
+### 2. Environment variables
 
-Copie `.env.test` como `.env` e ajuste conforme necessário:
+Copy `.env.test` to `.env` and adjust as needed:
 
 ```
 MONGODB_URI=mongodb://localhost:27017/ozmap
-GOOGLE_MAPS_API_KEY=<sua-chave-google-geocoding>
+GOOGLE_MAPS_API_KEY=<your-google-geocoding-key>
 ```
 
-### 3. Inicie o banco de dados via Docker
+### 3. Start the database via Docker
 
 ```sh
 docker-compose up --build
 ```
 
-- O MongoDB roda em um container (veja `docker-compose.yml`)
+* MongoDB runs in a container (see `docker-compose.yml`).
 
-### 4. Inicie o servidor localmente (sem Docker)
+### 4. Start the server locally (without Docker)
 
-- Execute:
+Run:
 
 ```sh
 npm run build
 npm run dev
 ```
 
-### 5. Rode os Testes e Cobertura
+### 5. Run tests and coverage
 
 ```sh
 npm test
 npm run coverage
 ```
 
-- Relatório de cobertura: `coverage/lcov-report/index.html` (abra no navegador)
-- Todos os endpoints possuem testes unitários e de integração. Os nomes dos testes seguem o padrão: `MÉTODO - endpoint - número - descrição` para integração e `- Test N - descrição` para unitários.
-- Para interpretar o relatório de coverage, arquivos "fantasmas" podem aparecer se removidos recentemente; rode `npm run coverage` após limpar a build.
+* Coverage report: `coverage/lcov-report/index.html` (open in the browser)
+* All endpoints have unit and integration tests. Test names follow the pattern: `METHOD - endpoint - number - description` for integration tests and `- Test N - description` for unit tests.
+* To interpret the coverage report, "ghost" files may appear if files were recently removed; run `npm run coverage` after cleaning the build.
 
-## 📦 Exemplos de Payload da API
+## 📦 API Payload Examples
 
-### Payload Válido de Região
+### Valid Region Payload
 
 ```json
 {
@@ -93,11 +95,11 @@ npm run coverage
 }
 ```
 
-### Payload Inválido de Região (polígono não fechado)
+### Invalid Region Payload (non-closed polygon)
 
 ```json
 {
-  "name": "Inválido",
+  "name": "Invalid",
   "geometry": {
     "type": "Polygon",
     "coordinates": [
@@ -111,16 +113,16 @@ npm run coverage
 }
 ```
 
-- O payload inválido acima resultará em erro 400 com mensagem de validação internacionalizada.
-- Consulte `/api-docs` para exemplos interativos e schemas completos.
+* The invalid payload above will return a **400 Bad Request** with an internationalized validation message.
+* See `/api-docs` for interactive examples and full schemas.
 
-### Buscar endereços pelo Google (não retorna regiões do banco)
+### Search addresses via Google (does not return DB regions)
 
 ```bash
 curl "http://localhost:3000/api/regions/query/address?address=Paulista"
 ```
 
-**Resposta:**
+**Response:**
 
 ```json
 [
@@ -132,13 +134,13 @@ curl "http://localhost:3000/api/regions/query/address?address=Paulista"
 ]
 ```
 
-### Buscar regiões por ponto
+### Search regions by point
 
 ```bash
 curl "http://localhost:3000/api/regions/query/point?longitude=-46.65&latitude=-23.55"
 ```
 
-**Resposta:**
+**Response:**
 
 ```json
 [
@@ -150,13 +152,13 @@ curl "http://localhost:3000/api/regions/query/point?longitude=-46.65&latitude=-2
 ]
 ```
 
-### Buscar regiões por distância
+### Search regions by distance
 
 ```bash
 curl "http://localhost:3000/api/regions/query/distance?longitude=-46.65&latitude=-23.55&distance=10000"
 ```
 
-**Resposta:**
+**Response:**
 
 ```json
 [
@@ -168,23 +170,24 @@ curl "http://localhost:3000/api/regions/query/distance?longitude=-46.65&latitude
 ]
 ```
 
-## 📚 Documentação da API
+## 📚 API Documentation
 
-- Swagger UI interativo: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
-- Todos os endpoints, schemas de request/response e mensagens de erro estão documentados.
-- Exemplos de respostas de erro internacionalizadas:
-  - `{"message": "Região não encontrada"}` (pt)
-  - `{"message": "Region not found"}` (en)
+* Swagger UI: [http://localhost:3000/api-docs](http://localhost:3000/api-docs)
+* All endpoints, request/response schemas and error messages are documented.
+* Example error responses (internationalized):
 
-## 🌍 Internacionalização
+  * `{"message": "Região não encontrada"}` (pt)
+  * `{"message": "Region not found"}` (en)
 
-- Idioma padrão: Português (`pt`)
-- Altere para inglês usando o header `Accept-Language: en` ou `?lang=en` na query.
-- Todas as mensagens de erro e validação são traduzidas automaticamente.
+## 🌍 Internationalization
 
-## 🧑‍💻 Exemplos de Uso
+* Default language: Portuguese (`pt`)
+* Switch to English using the header `Accept-Language: en` or the query `?lang=en`.
+* All validation and error messages are translated automatically.
 
-### Criar uma Região
+## 🧑‍💻 Usage Examples
+
+### Create a Region
 
 ```bash
 curl -X POST http://localhost:3000/api/regions/ \
@@ -206,25 +209,25 @@ curl -X POST http://localhost:3000/api/regions/ \
   }'
 ```
 
-### Listar Todas as Regiões
+### List All Regions
 
 ```bash
 curl http://localhost:3000/api/regions/
 ```
 
-### Buscar Regiões por Ponto
+### Search Regions by Point
 
 ```bash
 curl "http://localhost:3000/api/regions/query/point?longitude=-46.66&latitude=-23.55"
 ```
 
-### Buscar Regiões por Endereço
+### Search Regions by Address
 
 ```bash
 curl "http://localhost:3000/api/regions/query/address?address=São+Paulo"
 ```
 
-### Deletar uma Região
+### Delete a Region
 
 ```bash
 curl -X DELETE http://localhost:3000/api/regions/<regionId>
@@ -232,128 +235,39 @@ curl -X DELETE http://localhost:3000/api/regions/<regionId>
 
 ## 🛠️ Scripts
 
-- `npm run build` — Compila o TypeScript
-- `npm run dev` — Inicia o servidor em modo desenvolvimento com hot reload
-- `npm test` — Executa todos os testes
-- `npm run coverage` — Executa testes com relatório de cobertura
-- `npm run lint` — Lint do código
-- `npm run format:check` — Verifica formatação do código
-- `npm run seed` — Popula o banco de dados com regiões de exemplo (executa o script `src/scripts/seed-regions.ts`)
+* `npm run build` — Compiles TypeScript
+* `npm run dev` — Starts the server in development mode with hot reload
+* `npm test` — Runs all tests
+* `npm run coverage` — Runs tests with coverage report
+* `npm run lint` — Runs code linting
+* `npm run format:check` — Checks code formatting
+* `npm run seed` — Populates the database with example regions (runs `src/scripts/seed-regions.ts`)
 
-## 📦 Como popular o banco de dados
+## 📦 How to populate the database
 
-Para inserir rapidamente regiões de exemplo no banco MongoDB, execute:
+To quickly insert example regions into MongoDB, run:
 
 ```sh
 npm run seed
 ```
 
-Esse comando executa o script `src/scripts/seed-regions.ts`, que insere várias regiões reais de São Paulo e outros bairros para facilitar os testes das APIs.
+This command runs `src/scripts/seed-regions.ts`, which inserts several real regions from São Paulo and other neighborhoods to ease API testing.
 
-## 📝 Variáveis de Ambiente
+## 📝 Environment Variables
 
-- `MONGODB_URI` — String de conexão do MongoDB
-- `GOOGLE_MAPS_API_KEY` — Chave da API Google Geocoding
-- `DEFAULT_COUNTRY_CODE` — País padrão para geocodificação (padrão: `BR`)
-- `PORT` — Porta da API (padrão: 3000)
+* `MONGODB_URI` — MongoDB connection string
+* `GOOGLE_MAPS_API_KEY` — Google Geocoding API key
+* `DEFAULT_COUNTRY_CODE` — Default country code for geocoding (default: `BR`)
+* `PORT` — API port (default: `3000`)
 
-## 🧪 Testes
+## 🧪 Tests
 
-- Todos os endpoints possuem testes unitários e de integração.
-- Configuração do banco de testes em `.env.test`.
-- Para rodar os testes, use Node.js 22+ (`nvm use 22`).
-- O setup de testes garante isolamento e limpeza do banco entre execuções.
+* All endpoints have unit and integration tests.
+* Test database configuration is in `.env.test`.
+* To run tests, use Node.js 22+ (`nvm use 22`).
+* The test setup ensures isolation and cleanup of the database between runs.
 
-## 🧑‍💻 Autor & Licença
+## 🧑‍💻 Author & License
 
-- Licença MIT — veja [LICENSE](./LICENSE)
-- https://github.com/amilcarpio
-
----
-
-# Desafio Técnico Original
-
-Olá desenvolvedor(a)! Bem-vindo(a) ao Desafio Técnico do OZmap. Este é um projeto que simula um cenário real de nossa empresa, onde você irá desempenhar um papel crucial ao desenvolver uma API RESTful robusta para gerenciar localizações. Estamos muito animados para ver sua abordagem e solução!
-
-## 🌍 **Visão Geral**
-
-Em um mundo conectado e globalizado, a geolocalização se torna cada vez mais essencial. E aqui no OZmap, buscamos sempre otimizar e melhorar nossos sistemas. Assim, você encontrará um protótipo que precisa de sua experiência para ser corrigido, melhorado e levado ao próximo nível.
-
-## 🛠 **Especificações Técnicas**
-
-- **Node.js**: Versão 22 ou superior.
-- **Framework**: Express.
-- **Testes**: Mocha/Chai.
-- **Banco de Dados**: Mongo 8+.
-- **ORM**: Mongoose.
-- **Linguagem**: Typescript.
-- **Formatação e Linting**: Eslint + prettier.
-- **Comunicação com MongoDB**: Deve ser feita via container.
-
-## 🔍 **Funcionalidades Esperadas**
-
-### Regiões
-
-- Uma região é definida como um polígono em GeoJSON, um formato padrão para representar formas geográficas.
-- Cada região tem:
-
-  - **Nome**
-  - **Coordenadas**: um conjunto de coordenadas que formam o polígono
-- Lista de requisitos:
-
-  - **CRUD** completo para regiões.
-  - Listar regiões contendo um ponto específico, a partir de uma coordenada como dado de entrada
-  - Listar regiões a uma determinada distância de um ponto
-  - Passar um endereço (usar um serviço de geolocalização para resolver o endereço em coordenadas) e retornar as regiões que o contêm.
-- Exemplo de um polígono simples em GeoJSON:
-
-  ```json
-  {
-    "type": "Polygon",
-    "coordinates": [
-      [
-        [longitude1, latitude1],
-        [longitude2, latitude2],
-        [longitude3, latitude3],
-        [longitude1, latitude1] // Fecha o polígono
-      ]
-    ]
-  }
-  ```
-
-### Testes
-
-- Unitários e de integração.
-
-## 🌟 **Diferenciais**
-
-- Documentação completa da API.
-- Internacionalização.
-- Cobertura de código.
-- Controle de busca de endereços por código de país, configurável por variável de ambiente
-
-## ⚖ **Critérios de Avaliação**
-
-1. Organização e clareza do código.
-2. Estruturação do projeto.
-3. Qualidade e eficiência do código.
-4. Cobertura e qualidade de testes.
-5. Pontos diferenciais citados acima.
-6. Tempo de entrega (será considerado apenas o cumprimento do prazo, sem distinção entre entregas feitas no primeiro ou no último dia, com ênfase na qualidade da entrega).
-7. Padronização e clareza das mensagens de erro.
-8. Organização dos commits.
-9. Implementação de logs.
-10. Adesão às boas práticas de API RESTful.
-
-## 🚀 **Entrega**
-
-1. Crie um repositório público com a base desse código.
-2. Crie uma branch para realizar o seu trabalho.
-3. Ao finalizar, faça um pull request para a branch `main` do seu repositório.
-4. A revisão do teste será feita **em cima do PR aberto** para a branch `main`!
-5. Envie um email para `rh@ozmap.com.br` informando que o teste foi concluído.
-6. Aguarde nosso feedback.
-
----
-
-Estamos ansiosos para ver sua implementação e criatividade em ação! Boa sorte e que a força do código esteja com você! 🚀
+* MIT License — see [LICENSE](./LICENSE)
+* [https://github.com/amilcarpio](https://github.com/amilcarpio)
