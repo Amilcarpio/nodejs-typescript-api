@@ -1,4 +1,4 @@
-# OZmap Geolocation API
+# Geolocation API
 
 A robust, internationalized RESTful API for managing geolocations (regions) with CRUD operations and geospatial queries. Built with **Node.js, Express, TypeScript** and **MongoDB**.
 
